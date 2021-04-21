@@ -11,5 +11,5 @@ highlights = Highlights()
 notion = Notion(database_url)
 notion_articles = highlights.get_folder_highlights(folder_name)
 for article in notion_articles:
-    print(f"Processing article: {article.title}")
+    print(f"Processing article: {article.get('title')}")
     notion.add_page(article)
