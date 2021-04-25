@@ -19,9 +19,9 @@ class Notion():
         if article.get('source') is not None:
             row.source = article.get('source')
         for highlight in article.get('highlights'):
-            row.children.add_new(BulletedListBlock, title=highlight.get('text'))
             if highlight.get('note') is not None:
                 row.children.add_new(TextBlock, title=highlight.get('note'))
+            row.children.add_new(BulletedListBlock, title=highlight.get('text'))
 
 if __name__ == '__main__':
     filename = sys.argv[1]
