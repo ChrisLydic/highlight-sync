@@ -13,7 +13,7 @@ class Notion():
     def add_page(self, article):
         row = self.cv.collection.add_row()
         row.name = article.get('title')
-        row.tags = ["Highlights"]
+        row.tags = ["Highlights", "❤️"] if article.get('liked') else ["Highlights"]
         if article.get('authors') is not None:
             row.text_source = article.get('authors')
         if article.get('source') is not None:
@@ -21,7 +21,12 @@ class Notion():
         for highlight in article.get('highlights'):
             if highlight.get('note') is not None:
                 row.children.add_new(TextBlock, title=highlight.get('note'))
-            row.children.add_new(BulletedListBlock, title=highlight.get('text'))
+            lines = highlight.get('text').split('\n')
+            lines = [ n.strip() for n in lines if len(n) > 0 ]
+            parent = row.children.add_new(BulletedListBlock, title=lines[0])
+            for i in range(1, len(lines)):
+                child = row.children.add_new(BulletedListBlock, title=lines[i])
+                child.move_to(parent)
 
 if __name__ == '__main__':
     filename = sys.argv[1]

@@ -32,6 +32,7 @@ class Highlights():
         result = {
             'title': bookmark.title,
             'source': bookmark.url,
+            'liked': bookmark.starred,
             'highlights': []
         }
         for highlight in highlights_json:
